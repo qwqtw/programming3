@@ -1,0 +1,322 @@
+DAY 01 NOTES
+============
+
+Make sure you have JDK 17 (LTS) installed
+
+Install IntelliJ IDEA *Ultimate*
+
+Create Git repository for your projects in this course (see: "day 01 java gitignore.txt" file)
+
+Teacher's repository, !!! DO NOT CLONE !!!
+(TBD)
+
+
+Day01Randoms
+------------
+
+Ask the user how many random numbers they want to generate.
+If the number is negative display an error message and stop the program.
+
+Ask the user for their name. If they enter an empty string display an error message and stop the program.
+
+Ask for minimum and maximum integer values (both inclusive).
+If minimum is larger than maximum display an error message and stop the program.
+
+If any of the numbers is not an integer or is not parseable as one display an error message and stop the program.
+
+Generate the random integer values user requested and display them on a single line, comma-separated.
+
+You don't need to store those values anywhere.
+
+
+Example session:
+
+How many random integers do you want to generate? 5
+What is your name? Jerry
+Enter minimum: 2
+Enter maximum: 12
+Result: 3, 5, 6, 3, 12
+Did I do well, Jerry?
+
+
+Day01DataFromFile
+-----------------
+
+Using File Explorer, in the main directory of the project, create file "input.txt".
+It will contain lines with either names (strings) or floating point values.
+Make sure that *some* of the names are mentioned more than once (2-4 times).
+
+Your task is to read in that information.
+You will have two lists:
+
+static ArrayList<String> namesList = new ArrayList<>();
+static ArrayList<Double> numsList = new ArrayList<>();
+
+If a line contains a floating point or integer value then add it to numsList.
+If not then add the line to namesList.
+
+After reading the entire file in:
+1. Sort names alphabetically.
+2. Sort numbers from smallest to largest.
+3. Display names (sorted) on a single line, comma-separated.
+4. Display numbers (sorted) on a single line, comma-separated.
+5. Compute the average length of names in characters (floating point) and display it.
+6. Find and display any names that occur more than once in the list. Only report each such name once.
+7. Write the list from item 6 into "duplicates.txt" file, one per line. BUT: Append!
+
+Your program must not crash in any case.
+
+Example input file:
+
+Jerry
+2.12
+78.9
+Terry
+Maria
+Jerry
+Eva
+-12
+123
+Norman
+Eva
+Jerry
+Tom
+233
+
+Example session (the values may not be exact for the file above):
+
+Data loaded.
+Names sorted: Eva, Eva, Jerry, Jerry, Jerry, Maria, Norman, Tom
+Numbers sorted: -12, 2.21, 78.9, 123, 233
+Average length of names: 3.78    {{{ made up value just as an example }}}
+Dupliate names: Eva, Jerry
+
+Day01Todos
+----------
+
+>>> PART 1
+
+Define class as follows and add getters, setters and a constructor to it that takes 3 parameters.
+Encapsulate the fields, modify setters to verify values set.
+When constraints are violated in setters you must throw IllegalArgumentException with message explaining the problem.
+Make sure constructor also uses the setters.
+
+class Todo {
+	String task; // 2-50 characters long, must NOT contain a semicolon or | or ` (reverse single quote) characters
+    Date dueDate; // Date between year 1900 and 2100
+	int hoursOfWork; // 0 or greater number
+	// Part3: TaskStatus status;	
+	// Part3: enum TaskStatus { Pending, Done };
+	
+	// format all fields of this Todo item for display exactly as specified below in the example interactions
+	@Override
+	public String toString() {} 
+}
+
+
+In the main class you will declare
+
+static ArrayList<Todo> todoList = new ArrayList<>();
+static Scanner input = new Scanner(System.in);
+
+In a loop you will keep displaying the following menu of options to the user and then you will handle each of the options.
+
+Example session:
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 1
+
+Adding a todo.
+Enter task description: Buy milk
+Enter due Date (yyyy/mm/dd): 2019/11/22
+Enter hours of work (integer): 1
+You've created the following todo:
+Buy milk, 2019/11/22, will take 1 hour(s) of work, Pending.
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 2
+
+Listing all todos.
+#1: Buy milk, 2019/11/22, will take 1 hour(s) of work, Pending
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 4
+
+Modifying a todo. Which todo # would you like to modify? 1
+Modifying todo #1: Buy milk, 2019/11/22, will take 1 hour(s) of work, Pending
+Enter new task description: Buy milk 4%
+Enter new due Date (yyyy/mm/dd): 2019/11/27
+Enter new hours of work (integer): 2
+Enter if task is 'Done' or 'Pending': done
+You've modified todo #1 as follows:
+Buy milk 4%, 2019/11/22, will take 2 hour(s) of work, done
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 3
+
+Deleting a todo. Which todo # would you like to delete? 1
+Deleted todo #1 successfully.
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 2
+
+Listing all todos.
+There are no todos.
+
+Please make a choice [0-4]:
+1. Add a todo
+2. List all todos (numbered)
+3. Delete a todo
+4. Modify a todo
+0. Exit
+Your choice is: 0
+
+Exiting. Good bye!
+
+
+NOTES:
+* You need to handle properly when inputs are invalid.
+For example, wrong number of menu option is entered.
+Or user attempts to delete an item which does not exist.
+
+* During modification you will be using setters so if one of them throws an exception gracefully exit the operation (NOT the program) and display the menu again.
+
+You must have 4 separate methods implementing the behaviour of each of the 4 menu items.
+
+* For parsing and displaying date you should use SimpleDateFormat class.
+
+>>> PART 2
+
+Modify setter in Todo class for field task to make sure that it does NOT contain a semicolon or | or ` (reverse single quote, next to "1" button) characters.
+You should use regular a single expression to accomplish that.
+
+Add the following constructor to Todo class:
+
+	public Todo(String dataLine) {}
+
+This constructor will split and parse line's content and assign values to fields using setters.
+In case a problem is encountered it will throw one or more exceptions to signal a failure to create an object.
+
+
+Add the following method to Todo class:
+
+	public String toDataString() {}
+
+That method is similar to toString() however instead of providing String formatted for user's viewing pleasure it provides a string formatted in exactly the same way as each line in the data file. Example:
+
+Buy milk 2%;2019-11-22;2
+
+Add the following two methods to the main class:
+
+static void loadDataFromFile() {} // calls Todo(String); deserialize
+static void saveDataToFile() {} // calls todo.toDataString();  serialize
+
+The first one will load data from "todos.txt" file and instantiate one object for every line read, then add it to todoList.
+To parse lines you should use the 2nd constructor described above, one that takes an entire line as its only parameter.
+Note that this constructor may throw one or more different exceptions if a problem with line's content is encountered.
+In case an invalid line is encountered the program should inform the user and continue to the next line.
+Your program needs to call this method when it starts, before menu is displayed.
+
+The second one will save data from todoList back to "todos.txt" file using toDataString() method on each object on the list.
+
+In case an issue is encountered the program should inform the user and go back to the menu.
+Your program should call this method right before it exits, when user selects option 0. Exit.
+
+
+>>> PART 3
+
+In class Todo add the following definition:
+
+enum TaskStatus { Pending, Done };
+
+In class Todo add the following field, after the existing 3 fields, then encapsulate it.
+
+TaskStatus status;
+
+Modify the first constructor (the one that takes multiple parameters) so that status is the last parameter passed. Make sure it is assigned via setter.
+
+Modify the second constructor (the one that takes one String parameter) so that it parses an additional field at the end of each line. The value of field will either be string "Pending" or "Done". Use enums parsing to do that.
+
+Modify toString() and toDataString() to use status as well.
+
+In the main class, when adding new Todo item status is always "Pending" by default.
+
+In the main class, when modifying a Todo item status may be changed to either Pending or Done.
+
+
+>>> PART 4
+
+Modify the program so it doesn't crash if user enters non-integer on Scanner.nextInt() in menu, or when adding, or when editing a Todo.
+
+You will create a method with the signature as below.
+
+static int inputInt() { }
+
+It will allow user to enter an integer using Scanner.nextInt().
+If that call throws an exception it will be caught inside the method, a message "Invalid integer, please try again: " will be displayed and user will be allowed to try and enter another integer.
+Those actions will be repeated until user enters a valid integer number.
+
+Once you have this  method working properly modify the rest of the program to use it eveywhere where you ask user for integer value.
+
+
+>>> PART 5 BONUS/ADVANCED
+
+Make a copy of your project under a new name, e.g.  Day01TodosDb
+Reimplement CRUD operations to use SQLite database instead of a text file.
+https://www.tutorialspoint.com/sqlite/sqlite_java.htm
+
+
+Day01TeamMembers (ADVANCED)
+----------------
+
+Create console project Day02TeamMembers
+In the main directory of your project create input file "teams.txt" with content similar to:
+
+Green Grass Team:Jerry,Marry,Barry
+Terrific Team Today:Marry,Melinda,Eva,Jerry
+Other Best Team:Eva,Jerry,Barry
+Second to none Team:Melinda,Eva,Marry
+Yet Another Super-Team:Eva,Jerry,Barry,Marry
+
+After reading in the data from the file you will need to find out
+which player plays in which team and display the answer on the screen.
+
+Example output:
+Jerry plays in: Green Grass Team, Terrific Team Today, Other Best Team, Yet Another Super-Team
+Marry plays in: Green Grass Team, Terrific Team Today, Yet Another Super-Team
+Barry plays in: ... (and so on)
+
+Hint: You need to design a data structure to help you answer the question with minimum effort. Suggested data structure: HashMap
+
+You may also use ArrayList or specialized class, but HashMap will make the answer easiest to provide.
+
+Key: name of the player
+Value: list of teams player belongs to
+
+HashMap<String, ArrayList<String>> playersByTeams = new HashMap<>();
+
